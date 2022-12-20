@@ -18,7 +18,11 @@ namespace _MeshTest.Scripts
         private void Start()
         {
             Observable.Interval(TimeSpan.FromSeconds(3f))
-                .Subscribe(_ => { AddKnot(); }).AddTo(this);
+                .Subscribe(_ =>
+                {
+                    Debug.Log("Add spline's Knot in runtime");
+                    AddKnot();
+                }).AddTo(this);
         }
 
         private void AddKnot()
