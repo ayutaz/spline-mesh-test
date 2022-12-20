@@ -4,6 +4,16 @@ Splineを使用時にruntimeでsplineを更新するとWebGL上でsplineのmesh�
 
 # Demo
 
+https://unityroom.com/games/spline-mesh-test
+
+## Editor
+
+![Editor](Docs/MeshUpdateEditorDemo.gif)
+
+## WebGL
+
+![WebGL](Docs/MeshUpdateWebGLDemo.gif)
+
 # requirements
 
 * Unity 2022.2.0f1
