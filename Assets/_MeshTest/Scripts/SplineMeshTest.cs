@@ -21,9 +21,23 @@ namespace _MeshTest.Scripts
         private void Start()
         {
             _multipleRoadBehaviour = GetComponent<MultipleRoadBehaviour>();
+            Spline.Changed += OnSplineOnChanged;
             Observable.Interval(TimeSpan.FromSeconds(3f))
                 .Debug()
                 .Subscribe(_ => { AddKnot(); }).AddTo(this);
+        }
+
+        private void OnDestroy()
+        {
+            Spline.Changed -= OnSplineOnChanged;
+        }
+
+        private void OnSplineOnChanged(Spline spline, int i, SplineModification splineModification)
+        {
+            if (spline == Spline)
+            {
+                _multipleRoadBehaviour.CreateRoads();
+            }
         }
 
         private void AddKnot()
@@ -31,7 +45,6 @@ namespace _MeshTest.Scripts
             var addKnot = new BezierKnot(new float3(0, 0, LastKnot.Position.z + 3),
                 _targetIn, _targetOut, quaternion.identity);
             Spline.Add(addKnot);
-            _multipleRoadBehaviour.CreateRoads();
         }
     }
 }
