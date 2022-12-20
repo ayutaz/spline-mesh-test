@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Linq;
-using Cysharp.Threading.Tasks;
 using UniRx;
+using UniRx.Diagnostics;
 using Unity.Mathematics;
+using Unity.Splines.Examples;
 using UnityEngine;
 using UnityEngine.Splines;
 
@@ -11,24 +12,39 @@ namespace _MeshTest.Scripts
     public class SplineMeshTest : MonoBehaviour
     {
         [SerializeField] private SplineContainer splineContainer;
-        private BezierKnot LastKnot => splineContainer.Splines[0].Knots.Last();
-        private readonly float3 _targetIn = new float3(0, 0, -1);
-        private readonly float3 _targetOut = new float3(0, 0, 1);
+        private Spline Spline => splineContainer.Spline;
+        private BezierKnot LastKnot => Spline.Knots.Last();
+        private MultipleRoadBehaviour _multipleRoadBehaviour;
+        private readonly float3 _targetIn = new(0, 0, -1);
+        private readonly float3 _targetOut = new(0, 0, 1);
 
         private void Start()
         {
+            _multipleRoadBehaviour = GetComponent<MultipleRoadBehaviour>();
+            Spline.Changed += OnSplineOnChanged;
             Observable.Interval(TimeSpan.FromSeconds(3f))
-                .Subscribe(_ =>
-                {
-                    Debug.Log("Add spline's Knot in runtime");
-                    AddKnot();
-                }).AddTo(this);
+                .Debug()
+                .Subscribe(_ => { AddKnot(); }).AddTo(this);
+        }
+
+        private void OnDestroy()
+        {
+            Spline.Changed -= OnSplineOnChanged;
+        }
+
+        private void OnSplineOnChanged(Spline spline, int i, SplineModification splineModification)
+        {
+            if (spline == Spline)
+            {
+                _multipleRoadBehaviour.CreateRoads();
+            }
         }
 
         private void AddKnot()
         {
-            var addKnot = new BezierKnot(new float3(0, 0, LastKnot.Position.z + 3), _targetIn, _targetOut, quaternion.identity);
-            splineContainer.Splines[0].Add(addKnot);
+            var addKnot = new BezierKnot(new float3(0, 0, LastKnot.Position.z + 3),
+                _targetIn, _targetOut, quaternion.identity);
+            Spline.Add(addKnot);
         }
     }
 }
