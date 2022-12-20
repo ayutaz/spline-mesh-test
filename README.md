@@ -1,6 +1,6 @@
 # spline mesh test
 
-Splineを使用時にruntimeでsplineを更新するとWebGL上でsplineのmeshが見えなくなる問題のmin project
+Min project for the problem that the mesh of the splines are not visible on WebGL when the splines are updated in runtime when using Spline.
 
 # Demo
 
