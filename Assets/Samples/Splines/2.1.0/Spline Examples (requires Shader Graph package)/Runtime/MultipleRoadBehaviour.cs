@@ -1,8 +1,3 @@
-#if UNITY_EDITOR
-using UnityEditor;
-using UnityEditor.Splines;
-#endif
-
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +8,6 @@ using Interpolators = UnityEngine.Splines.Interpolators;
 
 namespace Unity.Splines.Examples
 {
-    [ExecuteInEditMode]
     [DisallowMultipleComponent]
     [RequireComponent(typeof(SplineContainer), typeof(MeshRenderer), typeof(MeshFilter))]
     public class MultipleRoadBehaviour : MonoBehaviour
@@ -67,20 +61,10 @@ namespace Unity.Splines.Examples
                 m_Mesh = null;
 
             CreateRoads();
-#if UNITY_EDITOR
-            EditorSplineUtility.AfterSplineWasModified += OnAfterSplineWasModified;
-            EditorSplineUtility.RegisterSplineDataChanged<float>(OnAfterSplineDataWasModified);
-            Undo.undoRedoPerformed += CreateRoads;
-#endif
         }
 
         public void OnDisable()
         {
-#if UNITY_EDITOR
-            EditorSplineUtility.AfterSplineWasModified -= OnAfterSplineWasModified;
-            EditorSplineUtility.UnregisterSplineDataChanged<float>(OnAfterSplineDataWasModified);
-            Undo.undoRedoPerformed -= CreateRoads;
-#endif
 
             if (m_Mesh != null)
 #if  UNITY_EDITOR
