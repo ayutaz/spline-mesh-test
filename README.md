@@ -1,25 +1,13 @@
-# spline mesh test
+# splines-v2.1.0-sample-project
 
-Min project for the problem that the mesh of the splines are not visible on WebGL when the splines are updated in runtime when using Spline.
+Sample projects using Splines 2.1.0
 
-# Demo
+# [Demo](https://spline-mesh-test.netlify.app/)
 
-https://unityroom.com/games/spline-mesh-test
-
-## Editor
-
-![Editor](Docs/MeshUpdateEditorDemo.gif)
-
-## WebGL
-
-![WebGL](Docs/MeshUpdateWebGLDemo.gif)
+![](Docs/SplinesSimpleDemo.gif)
 
 # requirements
 
 * Unity 2022.2.0f1
+* Splines 2.1.0
 
-# Background of the test project
-
-https://twitter.com/ayousanz/status/1604852785467445248?s=20&t=h5I5oU2qg4TCJ0zPOeLzNg
-
-The problem that the mesh associated with the runtime-generated splines is not visible when the splines are updated on WebGL, as discussed in this thread.
