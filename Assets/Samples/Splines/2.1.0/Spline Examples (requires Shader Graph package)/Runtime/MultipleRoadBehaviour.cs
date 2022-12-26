@@ -1,10 +1,7 @@
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.Splines;
-using Interpolators = UnityEngine.Splines.Interpolators;
 
 namespace Unity.Splines.Examples
 {
@@ -72,27 +69,6 @@ namespace Unity.Splines.Examples
 #else
                 Destroy(m_Mesh);
 #endif
-        }
-
-        void OnAfterSplineWasModified(Spline s)
-        {
-            if (m_Spline == null)
-            {
-                return;
-            }
-            if (RoadSplines.Contains(s))
-            {
-                CreateRoads();
-            }
-        }
-
-        void OnAfterSplineDataWasModified(SplineData<float> splineData)
-        {
-            if (m_Spline == null)
-            {
-                return;
-            }
-            CreateRoads();
         }
 
         public void CreateRoads()
